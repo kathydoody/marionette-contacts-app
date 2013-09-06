@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Kathy's Marionette Contact Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le styles -->
+    <link href="./assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+    <link href="./assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+       <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                   <span class="brand">Contact Manager</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-region" class="container">
+
+            <p>Here is static content in the web page. You'll notice that it gets
+                replaced by our app as soon as we start it.</p>
+
+        </div> <!-- /container -->
+
+       <script type="text/template" id="contact-list-item">
+           <%= firstName %> <%= lastName %>
+       </script>
+
+        <!-- javascript files
+        ================================================== -->
+        <script src="./assets/js/vendor/jquery-1.9.1.js"></script>
+        <script src="./assets/js/vendor/json2.js"></script>
+        <script src="./assets/js/vendor/underscore.js"></script>
+        <script src="./assets/js/vendor/backbone.js"></script>
+        <script src="./assets/js/vendor/backbone.marionette.js"></script>
+       <script src="./assets/js/app.js"></script>
+       <script src="./assets/js/entities/contact.js"></script>
+
+
+        <script type="text/javascript">
+
+            ContactManager.ContactItemView = Marionette.ItemView.extend({
+                template: "#contact-list-item",
+                tagName: "li"
+            });
+
+            ContactManager.ContactsView = Marionette.CollectionView.extend({
+                tagName: "ul",
+                itemView: ContactManager.ContactItemView
+            })
+
+
+            ContactManager.on("initialize:after", function(){
+                var contacts = ContactManager.request("contact:entities");
+
+                var contactsListView = new ContactManager.ContactsView({
+                    collection: contacts
+                });
+
+                ContactManager.mainRegion.show(contactsListView);
+            })
+
+            ContactManager.start();
+
+        </script>
+
+</body>
+</html>
