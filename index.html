@@ -34,8 +34,17 @@
         </div> <!-- /container -->
 
        <script type="text/template" id="contact-list-item">
-           <%= firstName %> <%= lastName %>
+            <td><%= firstName %></td><td><%= lastName %></td>
        </script>
+       <script type="text/template" id="contact-list">
+           <thead>
+                <tr><th>First Name</th><th>Last Name</th></tr>
+                <tbody>
+
+                </tbody>
+           </thead>
+       </script>
+
 
         <!-- javascript files
         ================================================== -->
@@ -44,32 +53,15 @@
         <script src="./assets/js/vendor/underscore.js"></script>
         <script src="./assets/js/vendor/backbone.js"></script>
         <script src="./assets/js/vendor/backbone.marionette.js"></script>
-       <script src="./assets/js/app.js"></script>
-       <script src="./assets/js/entities/contact.js"></script>
+        <script src="./assets/js/app.js"></script>
+        <script src="./assets/js/entities/contact.js"></script>
+        <script src="./assets/js/apps/contacts/list/list_template.js"></script>
+        <script src="./assets/js/apps/contacts/list/list_view.js"></script>
+        <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
+
 
 
         <script type="text/javascript">
-
-            ContactManager.ContactItemView = Marionette.ItemView.extend({
-                template: "#contact-list-item",
-                tagName: "li"
-            });
-
-            ContactManager.ContactsView = Marionette.CollectionView.extend({
-                tagName: "ul",
-                itemView: ContactManager.ContactItemView
-            })
-
-
-            ContactManager.on("initialize:after", function(){
-                var contacts = ContactManager.request("contact:entities");
-
-                var contactsListView = new ContactManager.ContactsView({
-                    collection: contacts
-                });
-
-                ContactManager.mainRegion.show(contactsListView);
-            })
 
             ContactManager.start();
 
